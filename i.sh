@@ -2,7 +2,7 @@
 # alias wrap_args='f(){ echo before "$@" after;  unset -f f; }; f'
 #mount –o rw,remount /
 #sudo passwd root
-
+/sbin/init
 setpasswd () {
 
 
