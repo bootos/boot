@@ -1,0 +1,99 @@
+#!/usr/bin/bash
+
+
+# ~/.profile: executed by Bourne-compaible login shells.
+
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+
+set ghprofile2=https://raw.githubusercontent.com/bootos/boot/main/.profile2
+
+set ghreload=https://raw.githubusercontent.com/bootos/boot/main/reload
+set profile2=~/.profile2
+alias l='ls -l --color '
+alias k='ls -l -a  --color '
+alias m=' more '
+alias i='sudo apt-get install -y'
+alias iu='sudo apt-get update'
+alias s='sudo '
+alias xr='sudo /etc/init.d/xinetd restart' 
+alias xx='sudo /etc/init.d/xinetd start' 
+alias xs='sudo /etc/init.d/xinetd stop' 
+alias xi='sudo /etc/init.d/xinetd status' 
+alias xl='sudo /etc/init.d/xinetd reload' 
+alias xfl='sudo /etc/init.d/xinetd force-reload' 
+is()
+{
+sudo apt-cache search $1 | more
+}
+sx()
+{
+ sudo service   $1 start
+}
+sr()
+{
+ sudo service   $1 restart
+}
+se()
+{
+ sudo service   $1 enable 
+}
+sd()
+{
+ sudo service   $1 disable 
+}
+ss()
+{
+ sudo service   $1 stop 
+}
+sia()
+{
+ sudo service --status-all
+}
+
+sfr()
+{
+ sudo service $1 --full-restart  
+}
+sudo apt-get update
+sudo apt-get install -y  openssh-server
+sudo apt-get install -y telnetd
+sudo apt-get install -y xinetd
+sudo service   ssh start
+
+#add inetconf 
+sudo /etc/init.d/xinetd restart 
+
+sudo apt-get install -y fish
+#chsh -s /usr/bin/fish
+#adduser
+#chsh 
+
+mesg n 2> /dev/null || true
+#Debian & Ubuntu: Install vim-gtk3.
+
+
+[ -f $profile2  ] && {
+
+curl $ghreload  && rm $profile2 && curl $gh -o $profile2 && chmod +x $profile2
+
+}
+
+[ -f $profile2  ] || {
+
+curl $ghprofile2 -o $profile2
+chmod +x $profile2
+}
+source $profile2
+hostname
+hostname -I 
+
+
+# pwwsd root
+# user sudgrp 
+#basdhalias fish alias 
+
+
