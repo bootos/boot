@@ -37,6 +37,10 @@ alias xi='sudo /etc/init.d/xinetd status'
 alias xl='sudo /etc/init.d/xinetd reload' 
 alias xfl='sudo /etc/init.d/xinetd force-reload' 
 
+iu 
+i sudo
+i ufw 
+
 sos(){
 
  sudo service  $2 $1  || sudo systemctl $1 $2
@@ -101,6 +105,47 @@ fi
 curl $1  || wget  $1 
 return 0
 }
+
+
+
+sudo ufw enable
+
+sudo ufw allow OpenSSH
+
+
+
+
+newsudouser(){
+sudo adduser $1 sudo || sudo usermod -aG sudo $1
+echo "$2" | sudo  passwd "$1" --stdin || echo "$1:$2" | sudo chpasswd
+ groups $1
+sudo  cat /etc/passwd | grep $1
+ id $1
+}
+nopasswd(){
+    sed -i /etc/sudoers -re 's/^root.*/root ALL=(ALL:ALL) NOPASSWD: ALL/g' 
+
+
+sed -i /etc/sudoers -re 's/^%sudo.*/%sudo ALL=(ALL:ALL) NOPASSWD: ALL/g'
+
+
+#sudo sed --in-place 's/^#\s*\(%$1\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers || sed -i 's/^#\s*\(%$1\s*ALL=(ALL)\s*NOPASSWD:\s*ALL\)/\1/' /etc/sudoers || sed -i 's/^#\s*\(%$1\s*ALL=(ALL)\s*NOPASSWD:\s*ALL\)/\1/' /etc/sudoers
+
+
+#sudo echo %$1 ALL=NOPASSWD:ALL > /etc/sudoers.d/$1 || sudo echo "$1 ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers && sudo chmod 0440 /etc/sudoers.d/$1 && sudo usermod -a -G sudo $1
+return 0
+}
+
+
+newsudouser z z
+newsudouser y y
+newsudouser x x 
+
+nopasswd
+
+
+
+
 
 sudo apt-get update
 sudo apt-get install -y  openssh-server
