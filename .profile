@@ -13,6 +13,17 @@ set ghprofile2=https://raw.githubusercontent.com/bootos/boot/main/.profile2
 
 set ghreload=https://raw.githubusercontent.com/bootos/boot/main/reload
 set profile2=~/.profile2
+#alias l="ls -l" 
+#alias k="ls -al"
+alias as="apt-cache search " 
+alias au="sudo apt-get update "
+#alias i="sudo apt-get install -y " 
+alias v="vim.gtk "
+#alias s=" sudo "
+#alias m=" more " 
+alias sk=" sudo kill "
+alias sv="sudo vim.gtk "
+
 alias l='ls -l --color '
 alias k='ls -l -a  --color '
 alias m=' more '
@@ -32,7 +43,12 @@ sos(){
 #systemctl reload-or-restart a
 
 }
+c(){
 
+ cd $1
+ ls -la 
+return 0
+}
 
 is()
 {
