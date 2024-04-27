@@ -25,29 +25,43 @@ alias xs='sudo /etc/init.d/xinetd stop'
 alias xi='sudo /etc/init.d/xinetd status' 
 alias xl='sudo /etc/init.d/xinetd reload' 
 alias xfl='sudo /etc/init.d/xinetd force-reload' 
+
+sos(){
+
+ sudo service  $2 $1  || sudo systemctl $1 $2
+#systemctl reload-or-restart a
+
+}
+
+
 is()
 {
 sudo apt-cache search $1 | more
 }
 sx()
 {
- sudo service   $1 start
+ sos start $1
+#sudo service   $1 start
 }
 sr()
 {
- sudo service   $1 restart
+ sos restart $1
+# sudo service   $1 restart
 }
 se()
 {
- sudo service   $1 enable 
+ sos enable $1
+#sudo service   $1 enable 
 }
 sd()
 {
- sudo service   $1 disable 
+ sos disable $1
+# sudo service   $1 disable 
 }
 ss()
 {
- sudo service   $1 stop 
+ sos stop $1 
+#sudo service   $1 stop 
 }
 sia()
 {
@@ -58,6 +72,20 @@ sfr()
 {
  sudo service $1 --full-restart  
 }
+
+dl(){
+
+if [ "$2" ]; then
+
+
+   curl $1 -o $2 || wget -O $2 $1 
+  return 0
+fi
+
+curl $1  || wget  $1 
+return 0
+}
+
 sudo apt-get update
 sudo apt-get install -y  openssh-server
 sudo apt-get install -y telnetd
@@ -76,15 +104,17 @@ mesg n 2> /dev/null || true
 #Debian & Ubuntu: Install vim-gtk3.
 
 
+
+
 [ -f $profile2  ] && {
 
-curl $ghreload  && rm $profile2 && curl $gh -o $profile2 && chmod +x $profile2
+dl $ghreload  && rm $profile2 && dl $gh $profile2 && chmod +x $profile2
 
 }
 
 [ -f $profile2  ] || {
 
-curl $ghprofile2 -o $profile2
+dl $ghprofile2  $profile2
 chmod +x $profile2
 }
 source $profile2
